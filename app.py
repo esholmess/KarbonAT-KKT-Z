@@ -57,6 +57,10 @@ st.markdown(
 
 
 with st.sidebar: #sidebar ayarları
+    st.header("HAKKINDA")
+    st.write("""
+        KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!
+    """)
     st.markdown("""
         <style>
             #sidebarh3{
@@ -67,8 +71,6 @@ with st.sidebar: #sidebar ayarları
             text-align:left;
                 
             </style>
-        <h3>HAKKINDA</h3>
-        <p>KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>
         <h3 id="sidebarh3">KarbonAT'ı kullanmaya başla:</h3><p>
         <ul id="sidebarul">
         <li> 🌱 Sizden istenen verileri günlük harcama raporlarınıza dayanarak girin.</li>
@@ -175,19 +177,19 @@ with tab1: #ana sayfa
 
     </style>
     <div class="banner-container">
-    <div class="banner">S
+    <div class="banner">
         <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&display=swap" rel="stylesheet">
-        <h3 style = "font-family: 'Baloo 2', cursive; margin: -20px 0 -50px 0; text-align:center; font-weight:700; transform: scaleY(0.95); font-size: 80px; color: #10b838; ">🌿</h3>
+        <h3 style = "font-family: 'Baloo 2', cursive; margin: -20px 0 -50px 0; text-align:center; font-weight:700; transform: scaleY(0.95); font-size: 80px; color: #10b838; "> 🌿 </h3>
         <h3 style = "font-family:'Baloo 2'; color: #10b838; text-align:center; margin:-15px 0 -15px 0; font-size: 30px"> KARBONUNU HESAPLA GELECEĞİNİ PLANLA</h3>
     </div>
     <div class="banner">
-                <p style = " font-style:italic; color:  #7cff80; font-size:15px; text-align:center; margin:-15px 0 -15px 0"> Türkiye'nin '2053 yılında net 0 emisyon' hedefine giden yolda bize katılın!</p>
+                <p style = " font-style:italic; color: #7cff80; text-align:center; margin:-15px 0 -15px 0"> Türkiye'nin '2053 yılında net 0 emisyon' hedefine giden yolda bize katılın!</p>
            
     </div>
     <div class="banner">
-                <p style = "color: #7cff80; text-align:center; font-size:15px; margin:-15px 0 -15px 0"> KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>     
+                <p style = "color: #7cff80; text-align:center; margin:-15px 0 -15px 0"> KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>     
     </div>
-    <div class="banner" id="features" style= "font-style:italic;  font-size:15px; color: #7cff80; text-align:center;">
+    <div class="banner" id="features" style= "font-style:italic; color: #7cff80; text-align:center;">
                 <p>🚀 Turizm Sektörüne Özgü Çözüm</p>
                 <p>🚀 Pratik, Hızlı ve Basit sistem</p>
                 <p>🚀 Kategorize Veri </p>
@@ -342,6 +344,7 @@ with tab2: #hesap makinesi sekmesi
             "Oda Basi" : footprint_oda, 
             "Tarih": date_input
         }
+        
         st.session_state.latest_inputs = user_inputs
         st.session_state.latest_categories = category_footprints
         st.session_state.scoreboard.append(st.session_state.latest_result)
@@ -355,7 +358,7 @@ with tab2: #hesap makinesi sekmesi
 
 
 with tab3:
-    st.subheader("📊 Raporlar ve Öneriler")
+    st.subheader("📊 RAPORLAR VE ÖNERİLER")
     if 'latest_result' in st.session_state:
         results = st.session_state.latest_result
 
@@ -434,11 +437,11 @@ with tab3:
         st.markdown("<h3 style='color:#00e676;'>📉 Detaylı Öneri Al</h3>", unsafe_allow_html=True)
         ai_rec= st.button("💡 Detaylı Öneri Al")
         if ai_rec:
-                st.write(detailed_suggestion)
-                st.write(general_plan)
+            summary, detailed_suggestions, general_plan = oneri_al(elektrik_total, gaz_total, su_total, atik_total, gida_total, kimyasal_total)
 
 
-
+            st.markdown(detailed_suggestions, unsafe_allow_html=True)
+            st.markdown(general_plan, unsafe_allow_html=True)
         # PDF Raporu 
         st.markdown("<hr style='border:1px solid #00e676;'>", unsafe_allow_html=True)
         st.markdown("<h3 style='color:#00e676;'>📄 Raporu PDF Olarak İndir</h3>", unsafe_allow_html=True)
