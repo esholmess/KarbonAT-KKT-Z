@@ -1,7 +1,7 @@
 emission_factors = {
     "Elektrik": {
         "Rüzgar Enerjisi": 0.233,
-        "Fosil Yakıt (TR ORT)": 0.478,
+        "Fosil Yakıt": 0.478,
         "Güneş Enerjisi": 0.012,
         "Hidro Elektrik": 0.048
     },
