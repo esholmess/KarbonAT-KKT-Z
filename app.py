@@ -8,7 +8,7 @@ from downloadpdf import save_as_pdf
 import datetime
 from factors import emission_factors
 from oneri_fonksiyonları import oneri_al
-import random
+import google.generativeai as genai
 
 
 st.set_page_config(page_title="KARBON-AT", page_icon="🌿", layout="wide") #sayfa ayarı
@@ -45,7 +45,8 @@ st.markdown(
         }
 
         .hr {
-        margin: 5px 0 0 0;}
+        margin: -10px 0 0 0 ;
+        }
 
 
     </style>
@@ -57,6 +58,10 @@ st.markdown(
 
 
 with st.sidebar: #sidebar ayarları
+    st.header("HAKKINDA")
+    st.write("""
+        KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!
+    """)
     st.markdown("""
         <style>
             #sidebarh3{
@@ -64,11 +69,10 @@ with st.sidebar: #sidebar ayarları
             }
             #sidebarul{
             margin-right:25px;
-            text-align:left;
+            text-align: left;
+            }
                 
             </style>
-        <h3>HAKKINDA</h3>
-        <p>KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>
         <h3 id="sidebarh3">KarbonAT'ı kullanmaya başla:</h3><p>
         <ul id="sidebarul">
         <li> 🌱 Sizden istenen verileri günlük harcama raporlarınıza dayanarak girin.</li>
@@ -112,7 +116,7 @@ with tab1: #ana sayfa
             align-items:center;}
                 
         .banner {
-            text-align: center;
+            text-align: justify;
             padding: 2rem;
             background: linear-gradient(45deg, #28a7462b, #11a0753d);  
             border: 1px solid #28a745;
@@ -127,8 +131,6 @@ with tab1: #ana sayfa
             
             
         }
-        .banner h1 {
-                text-align: center;}
         .banner p {
                 max-width: 700px}
 
@@ -181,13 +183,13 @@ with tab1: #ana sayfa
         <h3 style = "font-family:'Baloo 2'; color: #10b838; text-align:center; margin:-15px 0 -15px 0; font-size: 30px"> KARBONUNU HESAPLA GELECEĞİNİ PLANLA</h3>
     </div>
     <div class="banner">
-                <p style = " font-style:italic; color: #7cff80; text-align:center; font-size:15px; margin:-15px 0 -15px 0"> Türkiye'nin '2053 yılında net 0 emisyon' hedefine giden yolda bize katılın!</p>
+                <p style = " font-style:italic; color: #7cff80; text-align:center; margin:-15px 0 -15px 0"> Türkiye'nin '2053 yılında net 0 emisyon' hedefine giden yolda bize katılın!</p>
            
     </div>
     <div class="banner">
-                <p style = "color: #7cff80; text-align:center; font-size:15px; margin:-15px 0 -15px 0"> KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>     
+                <p style = "color: #7cff80; text-align:center; margin:-15px 0 -15px 0"> KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>     
     </div>
-    <div class="banner" id="features" style= "font-style:italic; font-size:15px; color: #7cff80; text-align:center;">
+    <div class="banner" id="features" style= "font-style:italic; color: #7cff80; text-align:center;">
                 <p>🚀 Turizm Sektörüne Özgü Çözüm</p>
                 <p>🚀 Pratik, Hızlı ve Basit sistem</p>
                 <p>🚀 Kategorize Veri </p>
@@ -213,7 +215,7 @@ with tab2: #hesap makinesi sekmesi
  
         }
         .stForm {
-            background: linear-gradient(45deg, #28a7462b, #11a0753d); 
+            background: linear-gradient(45deg, #28a7462b, #11a0753d);   
             margin: 0.4rem 1rem;             
         }
         .form_title {
@@ -355,7 +357,7 @@ with tab2: #hesap makinesi sekmesi
 
 
 with tab3:
-    st.subheader("📊 Raporlar ve Öneriler")
+    st.subheader("📊 RAPORLAR VE ÖNERİLER")
     if 'latest_result' in st.session_state:
         results = st.session_state.latest_result
 
@@ -365,16 +367,29 @@ with tab3:
             <p style='font-size:18px; color: white;'>📅 {results["Tarih"]} Tarihli Karbon Ayak İzi Raporu</p>
         </div>
         """, unsafe_allow_html=True)
+
+        genai.configure(api_key="AIzaSyB9TsOpdrny8Lu4WYQLHKYb9sjuSks2B4E")
+        model = genai.GenerativeModel("gemini-1.5-flash")
         emission = results["Toplam"]
 
-        st.markdown("<hr style='border:1px solid #00e676;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border: 0.5px solid #00e676;'>", unsafe_allow_html=True)
 
         st.markdown("<h3 style='color:#00e676;'>🧠 Özet Durum Analiziniz</h3>", unsafe_allow_html=True)
-        summary, detailed_suggestion, general_plan = oneri_al(elektrik_total, gaz_total, su_total, atik_total, gida_total, kimyasal_total)
-        st.success(summary)
+
+        try:
+            prompt = f"""
+            Benim karbon ayak izim {emission:.2f} kg CO₂.
+            Ben bir turizm işletmesiyim. Bu değeri bir cümle ile analiz et.
+            Türkçe yanıtla.
+            """
+            response = model.generate_content(prompt)
+            st.success(response.text)
+
+        except Exception as e:
+            st.error(f"Hata oluştu: {e}")
 
         # Emisyon Özeti 
-        st.markdown("<hr style='border:1px solid #00e676;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border: 0.5px solid #00e676;'>", unsafe_allow_html=True)
         st.markdown("<h3 style='color:#00e676;'>📌 Emisyon Özeti</h3>", unsafe_allow_html=True)
 
         col3, col4 = st.columns(2)
@@ -390,7 +405,7 @@ with tab3:
             st.metric("🏢 Metrekare Başına Düşen", f"{results['Metrekare Basi']:.2f} kg CO2")
 
         # Detaylı Emisyon Verileri
-        st.markdown("<hr style='border:1px solid #00e676;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border: 0.5px solid #00e676;'>", unsafe_allow_html=True)
         st.markdown("<h3 style='color:#00e676;'>📊 Detaylı Emisyon Verileri (Alt Tür Bazlı)</h3>", unsafe_allow_html=True)
 
         for category, items in st.session_state.latest_inputs.items():
@@ -409,7 +424,7 @@ with tab3:
                 st.pyplot(fig)
 
         # Kategori Bazlı Toplam Emisyon
-        st.markdown("<hr style='border:1px solid #00e676;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border: 0.5px solid #00e676;'>", unsafe_allow_html=True)
         st.markdown("<h3 style='color:#00e676;'>🔎 Kategori Bazlı Toplam Emisyon</h3>", unsafe_allow_html=True)
 
         df_summary = pd.DataFrame({
@@ -429,24 +444,57 @@ with tab3:
         ax.spines[:].set_color('white')
         st.pyplot(fig)
 
-        
-        st.markdown("<hr style='border:1px solid #00e676;'>", unsafe_allow_html=True)
-        st.markdown("<h3 style='color:#00e676;'>📉 Detaylı Öneri Al</h3>", unsafe_allow_html=True)
-        ai_rec= st.button("💡 Detaylı Öneri Al")
-        if ai_rec:
-                st.write(detailed_suggestion)
-                st.write(general_plan)
+        # Yapay zeka butonu
+        st.markdown("<hr style='border: 0.5px solid #00e676;'>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color:#00e676;'>📉 Yapay Zekadan Detaylı Öneri Al</h3>", unsafe_allow_html=True)
 
+        
+        
+        ai_rec = st.button("💡 Ekstra Öneri Al", use_container_width=True)
+        if ai_rec:
+            try:
+                company_name = results["Company"]
+                total_emission = results["Toplam"]
+                kisi_basi = results["Kisi Basi"]
+                m2_basi = results["Metrekare Basi"]
+                oda_basi = results["Oda Basi"]
+
+                kategori_emisyonlar = ""
+                for kategori, deger in st.session_state.latest_categories.items():
+                    kategori_emisyonlar += f"- {kategori}: {deger:.2f} kg CO₂\n"
+
+                prompt = f"""
+                Şirket adı: {company_name}
+                Toplam karbon ayak izi: {total_emission:.2f} kg CO₂
+                Kişi başına düşen emisyon: {kisi_basi:.2f} kg CO₂
+                Metrekare başına düşen emisyon: {m2_basi:.2f} kg CO₂
+                Oda başına düşen emisyon: {oda_basi:.2f} kg CO₂
+                Emisyon kategorileri:
+                {kategori_emisyonlar}
+
+                Yukarıdaki verilere dayanarak, 
+                bu turizm işletmesinin karbon ayak izini kısaca analiz et. Karbon ayak izini zaltmasına yardımcı olacak
+                kısa, uygulanabilir, sektörel bir yol haritası öner.
+                Her adım pratik ve sektöre uygun olmalı.
+                Yanıtı kısa ve net yaz. Türkçe yanıtla.
+                """
+
+                response = model.generate_content(prompt)
+                st.success("✅ Çevreci İşletme Yol Haritası:")
+                st.write(response.text)
+
+            except Exception as e:
+                st.error(f"Hata oluştu: {e}")
 
 
         # PDF Raporu 
-        st.markdown("<hr style='border:1px solid #00e676;'>", unsafe_allow_html=True)
+        st.markdown("<hr style='border: 0.5px solid #00e676;'>", unsafe_allow_html=True)
         st.markdown("<h3 style='color:#00e676;'>📄 Raporu PDF Olarak İndir</h3>", unsafe_allow_html=True)
 
         pdf_data = save_as_pdf(
             results=st.session_state.latest_result,
             category_footprints=st.session_state.latest_categories,
-            recommendations=detailed_suggestion.split("\n") + general_plan.split("\n"),
+            recommendations=response.text.split("\n"),
             logo_path="logo.png"
         )
 
