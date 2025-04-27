@@ -57,10 +57,6 @@ st.markdown(
 
 
 with st.sidebar: #sidebar ayarları
-    st.header("HAKKINDA")
-    st.write("""
-        KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!
-    """)
     st.markdown("""
         <style>
             #sidebarh3{
@@ -71,6 +67,8 @@ with st.sidebar: #sidebar ayarları
             text-align:left;
                 
             </style>
+        <h3>HAKKINDA</h3>
+        <p>KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>
         <h3 id="sidebarh3">KarbonAT'ı kullanmaya başla:</h3><p>
         <ul id="sidebarul">
         <li> 🌱 Sizden istenen verileri günlük harcama raporlarınıza dayanarak girin.</li>
@@ -183,13 +181,13 @@ with tab1: #ana sayfa
         <h3 style = "font-family:'Baloo 2'; color: #10b838; text-align:center; margin:-15px 0 -15px 0; font-size: 30px"> KARBONUNU HESAPLA GELECEĞİNİ PLANLA</h3>
     </div>
     <div class="banner">
-                <p style = " font-style:italic; color: #7cff80; text-align:center; margin:-15px 0 -15px 0"> Türkiye'nin '2053 yılında net 0 emisyon' hedefine giden yolda bize katılın!</p>
+                <p style = " font-style:italic; color: #7cff80; text-align:center; font-size:15px; margin:-15px 0 -15px 0"> Türkiye'nin '2053 yılında net 0 emisyon' hedefine giden yolda bize katılın!</p>
            
     </div>
     <div class="banner">
-                <p style = "color: #7cff80; text-align:center; margin:-15px 0 -15px 0"> KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>     
+                <p style = "color: #7cff80; text-align:center; font-size:15px; margin:-15px 0 -15px 0"> KarbonAT size daha sürdürülebilir bir işletme olma konusunda yol gösterir!</p>     
     </div>
-    <div class="banner" id="features" style= "font-style:italic; color: #7cff80; text-align:center;">
+    <div class="banner" id="features" style= "font-style:italic; font-size:15px; color: #7cff80; text-align:center;">
                 <p>🚀 Turizm Sektörüne Özgü Çözüm</p>
                 <p>🚀 Pratik, Hızlı ve Basit sistem</p>
                 <p>🚀 Kategorize Veri </p>
