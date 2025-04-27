@@ -348,7 +348,7 @@ with tab2: #hesap makinesi sekmesi
         st.session_state.latest_inputs = user_inputs
         st.session_state.latest_categories = category_footprints
         st.session_state.scoreboard.append(st.session_state.latest_result)
-        st.success("✅ Karbon ayak izi başarıyla hesaplandı! "Raporlar ve Öneriler" sekmesine geçerek raporunuzu görüntüleyin!")
+        st.success("✅ Karbon ayak izi başarıyla hesaplandı! 'Raporlar ve Öneriler' sekmesine geçerek raporunuzu görüntüleyin!")
 
     elif hesapla and not company_name:
         st.error("İşletme Bilgilerini Giriniz")
