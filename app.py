@@ -175,7 +175,7 @@ with tab1: #ana sayfa
 
     </style>
     <div class="banner-container">
-    <div class="banner">S
+    <div class="banner">
         <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&display=swap" rel="stylesheet">
         <h3 style = "font-family: 'Baloo 2', cursive; margin: -20px 0 -50px 0; text-align:center; font-weight:700; transform: scaleY(0.95); font-size: 80px; color: #10b838; "> 🌿 </h3>
         <h3 style = "font-family:'Baloo 2'; color: #10b838; text-align:center; margin:-15px 0 -15px 0; font-size: 30px"> KARBONUNU HESAPLA GELECEĞİNİ PLANLA</h3>
