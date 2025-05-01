@@ -197,6 +197,15 @@ with tab1: #ana sayfa
                 <p>🚀 Yapay Zekâ Temelli Öneri Sistemi</p>
     
     </div>
+    <div class="banner" id="features" style= "font-style:italic; font-size:15px; color: #7cff80;">
+                <p>Bizimle İletişime Geçin</p>
+                <a href= "https://www.linkedin.com/in/ilknur-yaren-k-51058831b/">LinkedIn - İlknur Yaren Karakoç</a>
+                <a href="https://www.linkedin.com/in/egeberkcinar/"> LinledIn - Ege Berk Çınar </p>
+                <a href="cinaregeberk00@gmail.com">Mail Adresi</a>
+                
+
+    
+    </div>
     </div>
     """, unsafe_allow_html=True)
 
